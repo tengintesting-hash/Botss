@@ -28,6 +28,10 @@ X-Admin-Token: ваш_ADMIN_TOKEN
 - `GET /admin/transactions` — транзакції
 
 ## Запуск
+1. Встановіть залежності:
+```
+pip install -r requirements.txt
+```
 1. Запустіть API:
 ```
 uvicorn api:app --reload
