@@ -2,11 +2,14 @@ from __future__ import annotations
 
 import os
 
+from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Header
 from pydantic import BaseModel
 from sqlalchemy import select
 
 from models import Channel, Offer, Transaction, User, async_session_factory, init_db
+
+load_dotenv()
 
 app = FastAPI(title="PRO# CPA API")
 ADMIN_TOKEN = os.getenv("ADMIN_TOKEN", "")

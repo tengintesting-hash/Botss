@@ -1,10 +1,11 @@
 import asyncio
+import os
 
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
+from dotenv import load_dotenv
 from sqlalchemy import select
 
-from config import settings
 from handlers import router
 from models import Channel, async_session_factory, init_db
 
@@ -16,14 +17,18 @@ async def load_channels() -> list[Channel]:
 
 
 async def main() -> None:
-    if not settings.bot_token:
+    load_dotenv()
+    bot_token = os.getenv("BOT_TOKEN", "")
+    web_app_url = os.getenv("WEB_APP_URL")
+
+    if not bot_token:
         raise RuntimeError(
             "Задайте змінну середовища BOT_TOKEN (токен бота з BotFather)."
         )
 
     await init_db()
 
-    bot = Bot(token=settings.bot_token)
+    bot = Bot(token=bot_token)
     dp = Dispatcher(storage=MemoryStorage())
     dp.include_router(router)
 
@@ -31,8 +36,8 @@ async def main() -> None:
     bot_info = await bot.get_me()
 
     dp["channels"] = channels
-    web_app_url = settings.web_app_url or f"https://t.me/{bot_info.username}/app"
-    dp["web_app_url"] = web_app_url
+    resolved_web_app_url = web_app_url or f"https://t.me/{bot_info.username}/app"
+    dp["web_app_url"] = resolved_web_app_url
 
     await dp.start_polling(bot)
 
