@@ -31,7 +31,7 @@ async def auto_approve_join(request: ChatJoinRequest) -> None:
 
 
 @router.message(CommandStart())
-async def start(message: Message, channels: list[Channel], bot_username: str) -> None:
+async def start(message: Message, channels: list[Channel], web_app_url: str) -> None:
     is_subscribed = True
     for channel in channels:
         member = await message.bot.get_chat_member(channel.channel_id, message.from_user.id)
@@ -46,7 +46,6 @@ async def start(message: Message, channels: list[Channel], bot_username: str) ->
         )
         return
 
-    web_app_url = f"https://t.me/{bot_username}/app"
     await message.answer(
         "✅ Ласкаво просимо!",
         reply_markup=InlineKeyboardMarkup(
