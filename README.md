@@ -28,24 +28,28 @@ X-Admin-Token: ваш_ADMIN_TOKEN
 - `GET /admin/transactions` — транзакції
 
 ## Запуск
+### Backend (бот + API)
 1. Встановіть залежності:
 ```
 pip install -r requirements.txt
 ```
-1. Запустіть API:
+2. Запустіть API:
 ```
 uvicorn api:app --reload
 ```
-2. Запустіть бота:
+3. Запустіть бота:
 ```
 python bot.py
 ```
 
-## Web App
-Компоненти Web App лежать у файлах:
-- `Home.jsx`
-- `Earn.jsx`
-- `Wallet.jsx`
-- `Admin.jsx`
+### Frontend (повний Web App)
+1. Встановіть Node.js та залежності:
+```
+npm install
+```
+2. Запустіть Web App:
+```
+npm run dev -- --host 0.0.0.0 --port 5173
+```
 
-Ви можете імпортувати їх у ваш React-проєкт.
+Після запуску Web App буде доступний на `http://<server>:5173`. Для Telegram Web App потрібен HTTPS-домен, тому налаштуйте SSL та проксі (наприклад через Nginx).
